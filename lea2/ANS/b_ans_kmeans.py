@@ -46,7 +46,6 @@ plt.legend()
 plt.show()
 
 
-
 sns.scatterplot(x='sepal_length', y='sepal_width', hue='Cluster', data= iris, palette='viridis')
 
 
@@ -91,7 +90,7 @@ help(clusteval)
 ########## 
 
 
-nee
+
 
 import seaborn as sns
 import pandas as pd
@@ -101,7 +100,17 @@ from sklearn.preprocessing import StandardScaler
 
 # Cargar el conjunto de datos de diamantes desde seaborn
 diamonds = sns.load_dataset('diamonds')
+diamonds.info()
 
+
+dim=pd.read_csv('https://raw.githubusercontent.com/juancamiloespana/LEA2/master/_data/diamonds.csv')
+dim
+
+
+diamonds2=diamonds.drop(['price'], axis=1)
+diamonds2=diamonds2.sample(n=1000)
+
+diamonds2.to_csv('diamonds.csv')
 # Seleccionar las características relevantes para clustering (precio y carat)
 features = diamonds[['price', 'carat']]
 

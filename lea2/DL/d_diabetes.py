@@ -137,15 +137,17 @@ y_pred=np.array(pred_diab_te)[:,0]
 y_pred.shape
 
 import sklearn.metrics as metrics
+import sklearn
 metrics.PredictionErrorDisplay.from_predictions(y_true=y_actual,y_pred=y_pred, kind="actual_vs_predicted")
 metrics.PredictionErrorDisplay.from_predictions(y_true=y_actual,y_pred=y_pred, kind="residual_vs_predicted")
 
+sklearn.__version__
 
 
 
 diabetes2=pd.read_csv("https://raw.githubusercontent.com/juancamiloespana/LEA2/master/_data/diabetes2.csv")
 
-
+diabetes
 X2sc=sc.transform(diabetes2)
 pred_new=ann3.predict(X2sc)
 diabetes2["pred"]=pred_new

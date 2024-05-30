@@ -10,21 +10,19 @@ iris=sns.load_dataset("iris")
 feat=iris.iloc[:,0:4]
 iris_sc=StandardScaler().fit_transform(feat)
 
-pca=PCA(n_components=2)
+pca=PCA(n_components=4)
 
 pca.fit(iris_sc)
 
-pca.components_
-pca.explained_variance_ratio_.sum()
-(pca.explained_variance_.sum()-4)/2
-iris_sc.var(axis=0)
-pca.noise_variance_
+pca.components_  ### vectores propios lambdas
+pca.explained_variance_ratio_.sum() ### valores propios alphas
 
-iris_pca=pca.transform(iris_sc)
+
+iris_pca=pca.transform(iris_sc) ### componentes principales L
 
 df_iris_pca=pd.DataFrame(iris_pca, columns=['pca1','pca2','pca3','pca4'])
 ### para cada valor ####
-np.dot(iris_sc[0],pca.components_[0])
+np.dot(iris_sc[0],pca.components_[0]) ### para calucular valores de los l
 
 ###### graficar datos
 
