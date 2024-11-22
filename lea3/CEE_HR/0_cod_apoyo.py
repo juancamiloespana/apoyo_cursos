@@ -21,7 +21,7 @@ retire.to_csv('retirement_info.csv')
 ##################################################################
 
 survey=pd.read_csv('employee_survey_data.csv', sep=',')
-
+survey.info()
 survey['DateSurvey'] = '2015-12-31'
 
 survey2=survey.copy()

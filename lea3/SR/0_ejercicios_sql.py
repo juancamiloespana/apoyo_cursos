@@ -34,7 +34,8 @@ pd.read_sql("""select count(distinct userId) from ratings""", conn)
 pd.read_sql("""select movieId, avg(rating)
             from ratings
             where movieId=1
-            group by movieId order by userId asc""", conn)
+            group by movieId 
+            order by userId asc""", conn)
 
 ####4
 pd.read_sql("""select a.title, count(b.rating) as cnt
@@ -44,23 +45,35 @@ pd.read_sql("""select a.title, count(b.rating) as cnt
 ####5
 pd.read_sql("""select a.title, count(b.rating) as cnt
             from movies a left join ratings b on a.movieId=b.movieId 
-            group by a.title having cnt=1 order by cnt asc """, conn)
+            group by a.title 
+            having cnt=1 order by cnt asc """, conn)
 
 ####6 
 pd.read_sql("""select genres, count(*) as cnt
             from movies 
             group by genres 
-            order by cnt desc limit 8,1 """, conn)
+            order by cnt desc limit 9 """, conn)
+
+pd.read_sql("""select genres, count(*) as cnt
+            from movies 
+            group by genres 
+            order by cnt desc limit 1 offset 8 """, conn) ### saltar 8 filas y mostrar una después
+
+pd.read_sql("""select genres, count(*) as cnt
+            from movies 
+            group by genres 
+            order by cnt desc limit 8,1 """, conn) ## después de las 8 primeras muestre 1
 
 pd.read_sql("""with t1 as (select genres, count(*) as cnt 
             from movies 
             group by genres 
-            order by cnt desc limit 9) select * from t1 order by cnt asc limit 1 """, conn)
+            order by cnt desc limit 9), t2 as (
+            select * from movies
+            ) 
+            select * from t1 order by cnt asc limit 1 """, conn)
 
 
-pd.read_sql("""select userId, avg(rating)
-            from ratings
-            group by userId order by userId asc""", conn)
+
 
 
 
@@ -74,11 +87,12 @@ import pandas as pd
 import sqlite3 as sql ### para conectarse a BD
 from mlxtend.preprocessing import TransactionEncoder
 
-conn= sql.connect('data\\db_movies')
-cur=conn.cursor()
+
+
 
 movies=pd.read_sql("""select * from movies""", conn)
 genres=movies['genres'].str.split('|')
 te = TransactionEncoder()
 genres = te.fit_transform(genres)
 genres = pd.DataFrame(genres, columns = te.columns_)
+len(movies['genres'].unique())
